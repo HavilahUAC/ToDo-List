@@ -1,49 +1,64 @@
 function addTask() {
-  var taskInput = document.getElementById('taskInput');
-  var taskText = taskInput.value.trim();
+    var taskInput = document.getElementById('taskInput');
+    var taskText = taskInput.value.trim();
 
-  if (taskText === "") {
-      alert("Please enter a task.");
-      return;
-  }
+    var taskTime = document.getElementById('taskTime');
+    var taskTimeValue = taskTime.value;
 
-  var taskList = document.getElementById('taskList');
+    if (taskText === "") {
+        alert("Please enter a task.");
+        return;
+    }
 
-  var li = document.createElement('li');
+    if (taskTimeValue === "") {
+        alert("Please set a time for the task.");
+        return;
+    }
 
-  // Create a span to wrap the task text
-  var taskSpan = document.createElement('span');
-  
-  // Create the Font Awesome task icon and text inside the span
-  var taskIcon = document.createElement('i');
-  taskIcon.classList.add('fas', 'fa-tasks'); // Font Awesome task icon
-  taskSpan.appendChild(taskIcon);
-  
-  var taskTextNode = document.createTextNode(taskText);
-  taskSpan.appendChild(taskTextNode);
-  
-  li.appendChild(taskSpan); // Append the task span to the li
+    var taskList = document.getElementById('taskList');
 
-  // Create check button with Font Awesome icon
-  var checkBtn = document.createElement('button');
-  checkBtn.classList.add('check-btn');
-  checkBtn.innerHTML = '<i class="fas fa-check"></i>';
-  checkBtn.onclick = function() {
-      taskSpan.classList.add('completed'); // Mark the task as completed
-      li.removeChild(checkBtn); // Remove the check button from the DOM
-  };
-  li.appendChild(checkBtn);
+    var li = document.createElement('li');
 
-  // Create delete button with Font Awesome icon
-  var deleteBtn = document.createElement('button');
-  deleteBtn.classList.add('delete-btn');
-  deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
-  deleteBtn.onclick = function() {
-      taskList.removeChild(li);
-  };
+    // Create a span to wrap the task text
+    var taskSpan = document.createElement('span');
+    
+    // Create the Font Awesome task icon and text inside the span
+    var taskIcon = document.createElement('i');
+    taskIcon.classList.add('fas', 'fa-tasks'); // Font Awesome task icon
+    taskSpan.appendChild(taskIcon);
+    
+    var taskTextNode = document.createTextNode(" " + taskText + " ");
+    taskSpan.appendChild(taskTextNode);
 
-  li.appendChild(deleteBtn);
-  taskList.appendChild(li);
+    // Create a span for the time
+    var timeSpan = document.createElement('span');
+    timeSpan.classList.add('task-time');
+    timeSpan.textContent = " (Due: " + taskTimeValue + ")";
+    taskSpan.appendChild(timeSpan);
+    
+    li.appendChild(taskSpan); // Append the task span to the li
 
-  taskInput.value = ""; // Clear input field
+    // Create check button with Font Awesome icon
+    var checkBtn = document.createElement('button');
+    checkBtn.classList.add('check-btn');
+    checkBtn.innerHTML = '<i class="fas fa-check"></i>';
+    checkBtn.onclick = function() {
+        taskSpan.classList.add('completed'); // Mark the task as completed
+        li.removeChild(checkBtn); // Remove the check button from the DOM
+    };
+    li.appendChild(checkBtn);
+
+    // Create delete button with Font Awesome icon
+    var deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
+    deleteBtn.innerHTML = '<i class="fas fa-trash-alt"></i> Delete';
+    deleteBtn.onclick = function() {
+        taskList.removeChild(li);
+    };
+
+    li.appendChild(deleteBtn);
+    taskList.appendChild(li);
+
+    taskInput.value = ""; // Clear input field
+    taskTime.value = ""; // Clear time field
 }
